@@ -14,6 +14,13 @@ signal rewarded(placement_id: String)
 signal banner_loaded(placement_id: String)
 signal banner_load_failed(placement_id: String, error: String, message: String)
 
+## Default placement IDs — must mirror export_plugin.gd's registered defaults. Godot strips a
+## setting equal to its default from project.godot, and the editor plugin that registers them
+## never runs on device, so every lookup must pass its own default (see _get_string).
+const DEFAULT_INTERSTITIAL := "Interstitial_Android"
+const DEFAULT_REWARDED := "Rewarded_Android"
+const DEFAULT_BANNER := "Banner_Android"
+
 var _plugin: Object = null
 
 
@@ -52,25 +59,25 @@ func show_ad(placement_id: String) -> void:
 
 
 func load_interstitial() -> void:
-	load_ad(_get_string("unity_ads/placements/interstitial"))
+	load_ad(_get_string("unity_ads/placements/interstitial", DEFAULT_INTERSTITIAL))
 
 
 func show_interstitial() -> void:
-	show_ad(_get_string("unity_ads/placements/interstitial"))
+	show_ad(_get_string("unity_ads/placements/interstitial", DEFAULT_INTERSTITIAL))
 
 
 func load_rewarded() -> void:
-	load_ad(_get_string("unity_ads/placements/rewarded"))
+	load_ad(_get_string("unity_ads/placements/rewarded", DEFAULT_REWARDED))
 
 
 func show_rewarded() -> void:
-	show_ad(_get_string("unity_ads/placements/rewarded"))
+	show_ad(_get_string("unity_ads/placements/rewarded", DEFAULT_REWARDED))
 
 
 ## position: "<top|center|bottom>_<left|center|right>", e.g. "bottom_center".
 func load_banner(position: String = "bottom_center") -> void:
 	if _plugin:
-		_plugin.load_banner(_get_string("unity_ads/placements/banner"), position)
+		_plugin.load_banner(_get_string("unity_ads/placements/banner", DEFAULT_BANNER), position)
 
 
 func show_banner() -> void:
@@ -101,12 +108,15 @@ func _connect_plugin() -> void:
 
 func _on_ad_completed(placement_id: String, state: String) -> void:
 	ad_completed.emit(placement_id, state)
-	if state == "COMPLETED" and placement_id == _get_string("unity_ads/placements/rewarded"):
+	var rewarded_id := _get_string("unity_ads/placements/rewarded", DEFAULT_REWARDED)
+	if state == "COMPLETED" and placement_id == rewarded_id:
 		rewarded.emit(placement_id)
 
 
-func _get_string(setting_name: String) -> String:
-	return str(ProjectSettings.get_setting(setting_name, ""))
+func _get_string(setting_name: String, default: String = "") -> String:
+	# ponytail: like _get_bool, Godot strips settings equal to their registered default from
+	# project.godot, so on device (no editor plugin) the caller must pass the real default.
+	return str(ProjectSettings.get_setting(setting_name, default))
 
 
 func _get_bool(setting_name: String, default: bool = false) -> bool:

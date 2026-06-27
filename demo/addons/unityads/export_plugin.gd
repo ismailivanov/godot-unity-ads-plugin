@@ -10,7 +10,7 @@ const SETTINGS := {
 	"unity_ads/auto_initialize": {"type": TYPE_BOOL, "default": true},
 	"unity_ads/placements/interstitial": {"type": TYPE_STRING, "default": "Interstitial_Android"},
 	"unity_ads/placements/rewarded": {"type": TYPE_STRING, "default": "Rewarded_Android"},
-	"unity_ads/placements/banner": {"type": TYPE_STRING, "default": "banner"},
+	"unity_ads/placements/banner": {"type": TYPE_STRING, "default": "Banner_Android"},
 }
 
 var _export_plugin: AndroidExportPlugin
