@@ -1,4 +1,5 @@
 # Godot Unity Ads (Android)
+<img width="2556" height="1370" alt="image" src="https://github.com/user-attachments/assets/8eb15b05-1a69-4c44-939c-c27f16830fb7" />
 
 Unity Ads in a Godot 4 game, without the boilerplate. You get interstitial, rewarded
 and banner ads from plain GDScript, and every ID lives in Project Settings instead of
