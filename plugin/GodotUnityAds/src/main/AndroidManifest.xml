@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unity Ads SDK contributes its own activities & permissions via the Maven
+     dependency Godot adds at export time (_get_android_dependencies). -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Godot scans the merged manifest for this meta-data to load the plugin.
+         Name = org.godotengine.plugin.v1.<getPluginName()>, value = FQ class. -->
+    <application>
+        <meta-data
+            android:name="org.godotengine.plugin.v1.GodotUnityAds"
+            android:value="com.godot.unityads.GodotUnityAds" />
+    </application>
+</manifest>

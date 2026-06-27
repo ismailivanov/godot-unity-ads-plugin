@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+.gradle/
+local.properties
+
+# Godot
+.godot/
+
+# Android build template (regenerate via Project → Install Android Build Template)
+/demo/android/
+
+# Godot AI MCP addon (local dev tool, not part of the plugin)
+addons/godot_ai/
+demo/godot-ai-LICENSE.txt
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
